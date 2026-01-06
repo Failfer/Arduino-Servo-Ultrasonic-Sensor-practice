@@ -2,19 +2,25 @@
   const int triggerPin = 2;
   const int echoPin = 7;
   long cm;
+  Servo servo;
 
 void setup() {
   // put your setup code here, to run once:
+  // some servos arent calibrated to the standard wavelenth and when you use attach need to set it to the correct pulse wavelegnth instead of between 1 and 2 (if it goes less than 180 degrees of room check and experiment)
   Serial.begin(9600);
   pinMode(triggerPin, OUTPUT);
   pinMode(echoPin, INPUT);
   
 
-/*
-  Servo servo;
-  servo.attach(12); //also assigns the pin but using the built in servo.h 
-  servo.write(0);
 
+  
+  servo.attach(12); //also assigns the pin but using the built in servo.h 
+
+
+  
+  servo.write(0); //reset servo to default position
+  delay(800); // wait a moment to allow it to reset if its not yet reset before starting
+  /*
   delay(500);
   servo.write(180);
   
@@ -66,14 +72,14 @@ void ultraSonicSensorLoop(){
 void loop() {
   ultraSonicSensorLoop(); // cm defined outside ultrasonic loop so others can acess it
   // sensor loop detects and prints the distance in centimeters
+  servo.write(distance_to_servo_angle(cm));
+  delay(1000); //waits a second in between, you can remove this for more quick reactions, I keep it as mine starts spazing out very rapidly and sounds like a small mouse going through their 3rd divorce after a little too much cheese
 
   
 
-  
 
 
   
-
 
 
 
@@ -84,5 +90,30 @@ long microsecondsToCentimeters(long ms){
 return ms / 29 /2; // divide by 2 since sound waves have to go to and from the object it hits to return 
 
 }
+
+float distance_to_servo_angle(long cm){ //takes in the distance in centimeters and makes the servo rotate to a set roation. numbers are arbitrary and what I thought looked cool.
+  if(cm >= 0 && cm < 10){
+    return 0;
+  }
+  else if(cm < 20){
+    return 45;
+  }
+
+  else if(cm < 30){
+    return 90;
+  }
+
+  else if(cm < 40){
+    return 135;
+  }
+  else {
+    return 180;
+  }
+}
+
+
+
+
+
 
 
