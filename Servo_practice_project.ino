@@ -1,12 +1,14 @@
 #include <Servo.h>
   const int triggerPin = 2;
   const int echoPin = 7;
+  long cm;
 
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
   pinMode(triggerPin, OUTPUT);
   pinMode(echoPin, INPUT);
+  
 
 /*
   Servo servo;
@@ -40,11 +42,8 @@ void setup() {
 
 }
 
-
-
-void loop() {
-
-  long duration, cm;
+void ultraSonicSensorLoop(){
+  long duration;
 
   digitalWrite(triggerPin, LOW);
   delayMicroseconds(2);
@@ -61,6 +60,16 @@ void loop() {
   Serial.print("Distance: ");
   Serial.print(cm);
   Serial.println(" cm");
+
+}
+
+void loop() {
+  ultraSonicSensorLoop(); // cm defined outside ultrasonic loop so others can acess it
+  // sensor loop detects and prints the distance in centimeters
+
+  
+
+  
 
 
   
