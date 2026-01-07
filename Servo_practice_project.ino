@@ -11,15 +11,12 @@ void setup() {
   pinMode(triggerPin, OUTPUT);
   pinMode(echoPin, INPUT);
   
-
-
-  
   servo.attach(12); //also assigns the pin but using the built in servo.h 
 
-
-  
   servo.write(0); //reset servo to default position
   delay(800); // wait a moment to allow it to reset if its not yet reset before starting
+
+  //examples on changing angles with servo.write(time in ms)
   /*
   delay(500);
   servo.write(180);
@@ -43,7 +40,6 @@ void setup() {
   servo.write(0);
   
   delay(500);
-
 */
 
 }
@@ -61,8 +57,6 @@ void ultraSonicSensorLoop(){
 
   cm = microsecondsToCentimeters(duration);
 
-
-
   Serial.print("Distance: ");
   Serial.print(cm);
   Serial.println(" cm");
@@ -74,15 +68,6 @@ void loop() {
   // sensor loop detects and prints the distance in centimeters
   servo.write(distance_to_servo_angle(cm));
   delay(1000); //waits a second in between, you can remove this for more quick reactions, I keep it as mine starts spazing out very rapidly and sounds like a small mouse going through their 3rd divorce after a little too much cheese
-
-  
-
-
-
-  
-
-
-
 }
 
 long microsecondsToCentimeters(long ms){
@@ -110,10 +95,3 @@ float distance_to_servo_angle(long cm){ //takes in the distance in centimeters a
     return 180;
   }
 }
-
-
-
-
-
-
-
